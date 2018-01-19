@@ -8,7 +8,6 @@ import java.util.List;
 
 public class Subject implements Savable {
 
-    private static Integer subjectCount = 1;
     private static final String SUBJECT_FILE = "subjects.csv";
     private String name;
     private String duration;
@@ -21,7 +20,6 @@ public class Subject implements Savable {
         this.duration = duration;
         this.ects = ects;
         this.test = test;
-        id = subjectCount++;
     }
 
     public String getName() {
@@ -36,10 +34,20 @@ public class Subject implements Savable {
         System.out.println("zaliczenie: " + this.test);
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
     @Override
     public String getDataToSave() {
         StringBuilder dataToSave = new StringBuilder();
         dataToSave
+                .append(this.id)
+                .append(",")
                 .append(this.name)
                 .append(",")
                 .append(this.duration)

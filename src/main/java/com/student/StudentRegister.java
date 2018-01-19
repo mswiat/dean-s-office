@@ -2,13 +2,10 @@ package com.student;
 
 import com.DeanOfficeWriter;
 import com.InfoProvider;
-import com.Reader;
-import com.student.Student;
-import com.student.StudentReader;
+import com.IReader;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 //@Component
 public class StudentRegister {
@@ -17,23 +14,23 @@ public class StudentRegister {
     //garbage collector nigdy nie usunie zmiennej statycznej
 
     //students -> Singleton !
-    private final static List<Student> students = new ArrayList<>();
+    private final static Map<Integer, Student> students = new HashMap<>();
     private static String STUDENTS_FILE = "students.csv";
 
     static {
         File file = new File(STUDENTS_FILE);
         if (file.exists() && !file.isDirectory()) {
             InfoProvider infoProvider = new InfoProvider();
-            Reader studentReader = new StudentReader();
+            IReader studentReader = new StudentReader();
             infoProvider.getInfo(STUDENTS_FILE, studentReader);
         }
     }
 
     public static void addStudent(Student student) {
-        if (!students.contains(student)) {
-            int id = students.size() + 1;
+        if (!students.containsKey(student.getId())) {
+            int id = getNextId();
             student.setId(id);
-            students.add(student);
+            students.put(id, student);
             System.out.println("Dodano studenta do listy.");
             DeanOfficeWriter officeWriter = new DeanOfficeWriter();
             officeWriter.save(student);
@@ -41,7 +38,19 @@ public class StudentRegister {
             System.out.println("Student istnieje już w bazie.");
         }
     }
-    public static List<Student> getStudents() {
+
+    private static int getNextId() {
+        Set<Integer> ids = students.keySet();
+        int nextID = students.size();
+        for (Integer id : ids) {
+            if (nextID < id) {
+                nextID = id;
+            }
+        }
+        return nextID + 1;
+    }
+
+    public static Map<Integer, Student> getStudents() {
         return students;
     }
 }

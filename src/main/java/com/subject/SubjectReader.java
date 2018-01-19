@@ -1,20 +1,21 @@
 package com.subject;
 
-import com.Reader;
-import com.subject.Subject;
-import com.subject.SubjectRegister;
+import com.IReader;
 
 import java.io.BufferedReader;
 
-public class SubjectReader implements Reader {
+public class SubjectReader implements IReader {
 
     @Override
     public void read(String line, BufferedReader br) {
         String[] splittedLine = line.split(",");
-        String name = splittedLine[0];
-        String duration = splittedLine[1];
-        int ects = Integer.valueOf(splittedLine[2]);
-        String test = splittedLine[3];
-        SubjectRegister.getSubjects().add(new Subject(name, duration, ects, test));
+        int id = Integer.valueOf(splittedLine[0]);
+        String name = splittedLine[1];
+        String duration = splittedLine[2];
+        int ects = Integer.valueOf(splittedLine[3]);
+        String test = splittedLine[4];
+        Subject subject = new Subject(name, duration, ects, test);
+        subject.setId(id);
+        SubjectRegister.getSubjects().put(id, subject);
     }
 }

@@ -5,10 +5,10 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-//wzorzec strategia
+//wzorzec strategia / Component ????
 
 public class InfoProvider {
-    public void getInfo(String fileName, Reader reader) {
+    public void getInfo(String fileName, IReader reader) {
         File input = new File(fileName);
         try (BufferedReader br = new BufferedReader(new FileReader(input))) {
             String line = br.readLine();

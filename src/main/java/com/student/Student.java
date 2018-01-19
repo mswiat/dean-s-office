@@ -3,6 +3,9 @@ package com.student;
 import com.Person;
 import com.Savable;
 
+import java.math.BigDecimal;
+import java.util.*;
+
 public class Student extends Person implements Savable {
     private static String STUDENT_FILE = "students.csv";
 
@@ -10,6 +13,7 @@ public class Student extends Person implements Savable {
     private String albumNumber;
     private StudentStatus status = StudentStatus.ACTIVE;
 
+    private Map<Integer, List<BigDecimal>> grades = new HashMap<>();
 
     public Student(String firstName, String lastName, String albumNumber, Long pesel) {
         super(firstName, lastName, pesel);
@@ -31,6 +35,10 @@ public class Student extends Person implements Savable {
 
     public StudentStatus getStatus() {
         return status;
+    }
+
+    public Map<Integer, List<BigDecimal>> getGrades() {
+        return grades;
     }
 
     public void setStatus(StudentStatus status) {

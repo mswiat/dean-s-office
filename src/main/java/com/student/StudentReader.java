@@ -1,8 +1,10 @@
 package com.student;
 
+import com.IReader;
+
 import java.io.*;
 
-public class StudentReader implements com.Reader {
+public class StudentReader implements IReader {
 
     @Override
     public void read(String line, BufferedReader br) {
@@ -16,6 +18,6 @@ public class StudentReader implements com.Reader {
         Student student = new Student(firstName, lastName, albumNumber, Long.valueOf(pesel));
         student.setId(id);
         student.setStatus(StudentStatus.valueOf(status));
-        StudentRegister.getStudents().add(student);
+        StudentRegister.getStudents().put(id, student);
     }
 }

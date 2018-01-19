@@ -5,6 +5,7 @@ import com.teacher.Teacher;
 import com.teacher.TeacherRegister;
 
 import java.io.File;
+import java.util.Map;
 import java.util.Scanner;
 
 public class AddTeacherDegree implements ICommand {
@@ -16,12 +17,18 @@ public class AddTeacherDegree implements ICommand {
         int id = Integer.valueOf(scanner.nextLine());
         System.out.println("Tytuł naukowy: ");
         String degree = scanner.nextLine();
-        for (Teacher teacher : TeacherRegister.getTeachers()) {
-            if (id == teacher.getId()) {
-                teacher.setDegree(degree);
-                System.out.println("Dodano tytuł naukowy dla: " + teacher.getFirstName() + " " + teacher.getLastName());
-            }
+
+        if (TeacherRegister.getTeachers().containsKey(id)) {
+            Teacher teacher = TeacherRegister.getTeachers().get(id);
+            teacher.setDegree(degree);
+            System.out.println("Dodano tytuł naukowy dla: " + teacher.getFirstName() + " " + teacher.getLastName());
+        } else {
+            System.out.println("Nie ma takiego nauczyciela w bazie.");
         }
+        saveChanges();
+    }
+
+    private void saveChanges() {
         File file = new File("teachers.csv");
         if (file.exists()) {
             file.delete();

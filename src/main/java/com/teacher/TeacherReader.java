@@ -1,10 +1,10 @@
 package com.teacher;
 
-import com.Reader;
+import com.IReader;
 
 import java.io.BufferedReader;
 
-public class TeacherReader implements Reader {
+public class TeacherReader implements IReader {
     @Override
     public void read(String line, BufferedReader br) {
         String[] splittedLine = line.split(",");
@@ -16,6 +16,6 @@ public class TeacherReader implements Reader {
         Teacher teacher = new Teacher(firstName, lastName, pesel);
         teacher.setId(id);
         teacher.setDegree(degree);
-        TeacherRegister.getTeachers().add(teacher);
+        TeacherRegister.getTeachers().put(id, teacher);
     }
 }

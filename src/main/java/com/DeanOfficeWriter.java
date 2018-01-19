@@ -2,6 +2,7 @@ package com;
 
 import java.io.*;
 import java.util.List;
+import java.util.Map;
 
 public class DeanOfficeWriter {
     /**
@@ -22,13 +23,12 @@ public class DeanOfficeWriter {
         }
     }
 
-    //Powinno być list<Person> ???????????    Jak zrobić bardziej ogólną metodę?
-    public void save(List<? extends Person> people){
-        String fileName = people.get(0).getFileName();
+    public void save(Map<Integer, ? extends Person> people) {
+        String fileName = people.get(1).getFileName();
         File output = new File(fileName);
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(output, true))) {
-            for(Person person : people) {
-                String dataToSave = person.getDataToSave();
+            for (Map.Entry<Integer, ? extends Person> entry : people.entrySet()) {
+                String dataToSave = entry.getValue().getDataToSave();
                 bw.write(dataToSave);
                 bw.newLine();
             }
