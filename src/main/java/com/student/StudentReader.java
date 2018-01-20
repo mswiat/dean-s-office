@@ -1,10 +1,17 @@
 package com.student;
 
 import com.IReader;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.*;
+import java.util.Map;
 
+@Component
 public class StudentReader implements IReader {
+
+    @Autowired
+    private StudentRegister studentRegister;
 
     @Override
     public void read(String line, BufferedReader br) {
@@ -18,6 +25,7 @@ public class StudentReader implements IReader {
         Student student = new Student(firstName, lastName, albumNumber, Long.valueOf(pesel));
         student.setId(id);
         student.setStatus(StudentStatus.valueOf(status));
-        StudentRegister.getStudents().put(id, student);
+        Map<Integer, Student> students = studentRegister.getStudents();
+        students.put(id, student);
     }
 }

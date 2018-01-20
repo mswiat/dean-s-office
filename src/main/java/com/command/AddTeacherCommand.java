@@ -1,11 +1,17 @@
-package command;
+package com.command;
 
 import com.teacher.Teacher;
 import com.teacher.TeacherRegister;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
+@Component
 public class AddTeacherCommand implements ICommand {
+    @Autowired
+    private TeacherRegister teacherRegister;
+
     @Override
     public void execute() {
         String firstName;
@@ -19,6 +25,6 @@ public class AddTeacherCommand implements ICommand {
         lastName = scanner.nextLine();
         System.out.println("pesel: ");
         pesel = Long.valueOf(scanner.nextLine());
-        TeacherRegister.addTeacher(new Teacher(firstName, lastName, pesel));
+        teacherRegister.addTeacher(new Teacher(firstName, lastName, pesel));
     }
 }

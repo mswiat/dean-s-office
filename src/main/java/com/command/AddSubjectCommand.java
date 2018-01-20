@@ -1,11 +1,16 @@
-package command;
+package com.command;
 
 import com.subject.Subject;
 import com.subject.SubjectRegister;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
-
+@Component
 public class AddSubjectCommand implements ICommand {
+    @Autowired
+    private SubjectRegister subjectRegister;
+
     @Override
     public void execute() {
         String name;
@@ -22,6 +27,6 @@ public class AddSubjectCommand implements ICommand {
         ects = Integer.valueOf(scanner.nextLine());
         System.out.println("zaliczenie: ");
         test = scanner.nextLine();
-        SubjectRegister.addSubject(new Subject(name, duration, ects, test));
+        subjectRegister.addSubject(new Subject(name, duration, ects, test));
     }
 }

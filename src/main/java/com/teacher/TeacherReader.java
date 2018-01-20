@@ -1,10 +1,17 @@
 package com.teacher;
 
 import com.IReader;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 
+@Component
 public class TeacherReader implements IReader {
+
+    @Autowired
+    private TeacherRegister teacherRegister;
+
     @Override
     public void read(String line, BufferedReader br) {
         String[] splittedLine = line.split(",");
@@ -16,6 +23,6 @@ public class TeacherReader implements IReader {
         Teacher teacher = new Teacher(firstName, lastName, pesel);
         teacher.setId(id);
         teacher.setDegree(degree);
-        TeacherRegister.getTeachers().put(id, teacher);
+        teacherRegister.getTeachers().put(id, teacher);
     }
 }

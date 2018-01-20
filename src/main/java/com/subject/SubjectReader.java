@@ -1,10 +1,15 @@
 package com.subject;
 
 import com.IReader;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 
+@Component
 public class SubjectReader implements IReader {
+    @Autowired
+    private SubjectRegister subjectRegister;
 
     @Override
     public void read(String line, BufferedReader br) {
@@ -16,6 +21,6 @@ public class SubjectReader implements IReader {
         String test = splittedLine[4];
         Subject subject = new Subject(name, duration, ects, test);
         subject.setId(id);
-        SubjectRegister.getSubjects().put(id, subject);
+        subjectRegister.getSubjects().put(id, subject);
     }
 }

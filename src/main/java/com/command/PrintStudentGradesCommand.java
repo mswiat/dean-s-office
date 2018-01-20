@@ -1,26 +1,29 @@
-package command;
+package com.command;
 
-import com.IReader;
-import com.InfoProvider;
-import com.grade.GradeReader;
 import com.grade.GradeRegister;
 import com.student.Student;
 import com.student.StudentRegister;
 import com.subject.Subject;
 import com.subject.SubjectRegister;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-
+@Component
 public class PrintStudentGradesCommand implements ICommand {
-    private static String GRADES_FILE = "grades.csv";
-    private String firstName;
-    private String lastName;
+    private Student student;
     private int subjectID;
     private Map<Integer, List<BigDecimal>> grades = new HashMap<>();
+    @Autowired
+    private StudentRegister studentRegister;
+    @Autowired
+    private SubjectRegister subjectRegister;
+    @Autowired
+    private GradeRegister gradeRegister;
 
     @Override
     public void execute() {
@@ -28,32 +31,22 @@ public class PrintStudentGradesCommand implements ICommand {
         System.out.println("Podaj ID studenta: ");
         int studentId = Integer.valueOf(scanner.nextLine());
 
-        if (StudentRegister.getStudents().containsKey(studentId)) {
-            Student student = StudentRegister.getStudents().get(studentId);
-            getStudentGrades(student);
+        if (studentRegister.getStudents().containsKey(studentId)) {
+            student = studentRegister.getStudents().get(studentId);
+            grades = gradeRegister.getGrades(student);
             printGrades();
         } else {
             System.out.println("Nie ma takiego studenta w bazie.");
         }
     }
 
-    private void getStudentGrades(Student student) {
-        firstName = student.getFirstName();
-        lastName = student.getLastName();
-
-        InfoProvider infoProvider = new InfoProvider();
-        IReader gradeReader = new GradeReader(student);
-        infoProvider.getInfo(GRADES_FILE, gradeReader);
-
-        grades = student.getGrades();
-    }
-
     private void printGrades() {
-        System.out.println(firstName + " " + lastName);
+        System.out.println(student.getFirstName() + " " + student.getLastName());
         for (Map.Entry<Integer, List<BigDecimal>> entry : grades.entrySet()) {
             subjectID = entry.getKey();
-            System.out.print(SubjectRegister.getSubjects().get(subjectID).getName() + ": ");
-            System.out.println(entry.getValue());
+            System.out.print(subjectRegister.getSubjects().get(subjectID).getName() + ": ");
+            System.out.print(entry.getValue() + "; średnia: ");
+            System.out.println(gradeRegister.getAverage(entry.getValue()));
         }
         System.out.println();
     }

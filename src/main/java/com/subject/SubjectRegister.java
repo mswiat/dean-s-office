@@ -1,26 +1,32 @@
 package com.subject;
 
 import com.DeanOfficeWriter;
+import com.IPostSpringInit;
 import com.InfoProvider;
 import com.IReader;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.util.*;
 
-public class SubjectRegister {
-    private final static Map<Integer, Subject> subjects = new HashMap<>();
+@Component
+public class SubjectRegister implements IPostSpringInit {
+    private final Map<Integer, Subject> subjects = new HashMap<>();
     private static String SUBJECTS_FILE = "subjects.csv";
+    @Autowired
+    private InfoProvider infoProvider;
+    @Autowired
+    private SubjectReader subjectReader;
 
-    static {
+    public void init() {
         File file = new File(SUBJECTS_FILE);
         if (file.exists() && !file.isDirectory()) {
-            InfoProvider infoProvider = new InfoProvider();
-            IReader subjectReader = new SubjectReader();
             infoProvider.getInfo(SUBJECTS_FILE, subjectReader);
         }
     }
 
-    public static void addSubject(Subject subject) {
+    public void addSubject(Subject subject) {
         if (!subjects.containsKey(subject)) {
             int id = getNextId();
             subject.setId(id);
@@ -33,7 +39,7 @@ public class SubjectRegister {
         }
     }
 
-    private static int getNextId() {
+    private int getNextId() {
         Set<Integer> ids = subjects.keySet();
         int nextID = subjects.size();
         for (Integer id : ids) {
@@ -44,7 +50,7 @@ public class SubjectRegister {
         return nextID + 1;
     }
 
-    public static Map<Integer, Subject> getSubjects() {
+    public Map<Integer, Subject> getSubjects() {
         return subjects;
     }
 }

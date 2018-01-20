@@ -1,14 +1,18 @@
-package command;
+package com.command;
 
 import com.DeanOfficeWriter;
 import com.teacher.Teacher;
 import com.teacher.TeacherRegister;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
-import java.util.Map;
 import java.util.Scanner;
 
+@Component
 public class AddTeacherDegree implements ICommand {
+    @Autowired
+    private TeacherRegister teacherRegister;
 
     @Override
     public void execute() {
@@ -18,8 +22,8 @@ public class AddTeacherDegree implements ICommand {
         System.out.println("Tytuł naukowy: ");
         String degree = scanner.nextLine();
 
-        if (TeacherRegister.getTeachers().containsKey(id)) {
-            Teacher teacher = TeacherRegister.getTeachers().get(id);
+        if (teacherRegister.getTeachers().containsKey(id)) {
+            Teacher teacher = teacherRegister.getTeachers().get(id);
             teacher.setDegree(degree);
             System.out.println("Dodano tytuł naukowy dla: " + teacher.getFirstName() + " " + teacher.getLastName());
         } else {
@@ -34,6 +38,6 @@ public class AddTeacherDegree implements ICommand {
             file.delete();
         }
         DeanOfficeWriter deanOfficeWriter = new DeanOfficeWriter();
-        deanOfficeWriter.save(TeacherRegister.getTeachers());
+        deanOfficeWriter.save(teacherRegister.getTeachers());
     }
 }

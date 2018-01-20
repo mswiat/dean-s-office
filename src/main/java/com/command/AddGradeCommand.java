@@ -1,12 +1,18 @@
-package command;
+package com.command;
 
 import com.grade.Grade;
 import com.grade.GradeEnum;
 import com.grade.GradeRegister;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
+@Component
 public class AddGradeCommand implements ICommand {
+    @Autowired
+    private GradeRegister gradeRegister;
+
     @Override
     public void execute() {
         int studentId;
@@ -19,6 +25,6 @@ public class AddGradeCommand implements ICommand {
         subjectId = Integer.valueOf(scanner.nextLine());
         System.out.println("Podaj ocenę: BDB/DB/DST/DOP");
         grade = scanner.nextLine();
-        GradeRegister.addGrade(new Grade(studentId,subjectId, GradeEnum.valueOf(grade)));
+        gradeRegister.addGrade(new Grade(studentId,subjectId, GradeEnum.valueOf(grade)));
     }
 }

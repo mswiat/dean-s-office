@@ -1,27 +1,52 @@
 package com;
 
-import command.*;
+import com.command.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+@Component
 public class Console {
     private Map<Integer, ICommand> commands = new HashMap<>();
     private boolean isExit = false;
+    @Autowired
+    private PrintStudentInfoCommand printStudentInfoCommand;
+    @Autowired
+    private PrintTeacherInfoCommand printTeacherInfoCommand;
+    @Autowired
+    private PrintSubjectInfoCommand printSubjectInfoCommand;
+    @Autowired
+    private PrintStudentGradesCommand printStudentGradesCommand;
+    @Autowired
+    private AddStudentCommand addStudentCommand;
+    @Autowired
+    private AddTeacherCommand addTeacherCommand;
+    @Autowired
+    private AddSubjectCommand addSubjectCommand;
+    @Autowired
+    private AddTeacherDegree addTeacherDegree;
+    @Autowired
+    private ChangeStudentStatus changeStudentStatus;
+    @Autowired
+    private AddGradeCommand addGradeCommand;
+    @Autowired
+    private ExitCommand exitCommand;
 
     public void init() {
-        commands.put(1, new PrintStudentInfoCommand());
-        commands.put(2, new PrintTeacherInfoCommand());
-        commands.put(3, new PrintSubjectInfoCommand());
-        commands.put(4, new PrintStudentGradesCommand());
-        commands.put(5, new AddStudentCommand());
-        commands.put(6, new AddTeacherCommand());
-        commands.put(7, new AddSubjectCommand());
-        commands.put(8, new AddTeacherDegree());
-        commands.put(9, new ChangeStudentStatus());
-        commands.put(10, new AddGradeCommand());
-        commands.put(11, new ExitCommand(this));
+        commands.put(1, printStudentInfoCommand);
+        commands.put(2, printTeacherInfoCommand);
+        commands.put(3, printSubjectInfoCommand);
+        commands.put(4, printStudentGradesCommand);
+        commands.put(5, addStudentCommand);
+        commands.put(6, addTeacherCommand);
+        commands.put(7, addSubjectCommand);
+        commands.put(8, addTeacherDegree);
+        commands.put(9, changeStudentStatus);
+        commands.put(10, addGradeCommand);
+        commands.put(11, exitCommand);
     }
 
     public void handleConsole() {

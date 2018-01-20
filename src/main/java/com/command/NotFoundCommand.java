@@ -1,4 +1,4 @@
-package command;
+package com.command;
 
 public class NotFoundCommand implements ICommand{
     @Override
