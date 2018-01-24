@@ -9,6 +9,7 @@ import java.util.Map;
 
 @Component
 public class PrintSubjectInfoCommand implements ICommand {
+
     @Autowired
     private SubjectRegister subjectRegister;
 

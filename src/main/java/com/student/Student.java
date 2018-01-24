@@ -7,12 +7,12 @@ import java.math.BigDecimal;
 import java.util.*;
 
 public class Student extends Person implements Savable {
+    private static final String DELIMITER = ",";
     private static String STUDENT_FILE = "students.csv";
 
     private int id;
     private String albumNumber;
     private StudentStatus status = StudentStatus.ACTIVE;
-
     private Map<Integer, List<BigDecimal>> grades = new HashMap<>();
 
     public Student(String firstName, String lastName, String albumNumber, Long pesel) {
@@ -20,6 +20,7 @@ public class Student extends Person implements Savable {
         this.albumNumber = albumNumber;
     }
 
+    @Override
     public void info() {
         System.out.println("Student ID: " + id);
         System.out.println("imię: " + firstName);
@@ -27,6 +28,29 @@ public class Student extends Person implements Savable {
         System.out.println("numer albumu: " + albumNumber);
         System.out.println("PESEL: " + pesel);
         System.out.println("status: " + status.getValuePL());
+    }
+
+    @Override
+    public String getDataToSave() {
+        StringBuilder dataToSave = new StringBuilder();
+        dataToSave
+                .append(this.id)
+                .append(DELIMITER)
+                .append(this.firstName)
+                .append(DELIMITER)
+                .append(this.lastName)
+                .append(DELIMITER)
+                .append(this.albumNumber)
+                .append(DELIMITER)
+                .append(this.pesel)
+                .append(DELIMITER)
+                .append(this.status.name());
+        return dataToSave.toString();
+    }
+
+    @Override
+    public String getFileName() {
+        return STUDENT_FILE;
     }
 
     public String getAlbumNumber() {
@@ -37,6 +61,10 @@ public class Student extends Person implements Savable {
         return status;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public Map<Integer, List<BigDecimal>> getGrades() {
         return grades;
     }
@@ -45,38 +73,11 @@ public class Student extends Person implements Savable {
         this.status = status;
     }
 
+    public void setGrades(Map<Integer, List<BigDecimal>> grades) {
+        this.grades = grades;
+    }
+
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getDataToSave() {
-        StringBuilder dataToSave = new StringBuilder();
-        dataToSave
-                .append(this.id)
-                .append(",")
-                .append(this.firstName)
-                .append(",")
-                .append(this.lastName)
-                .append(",")
-                .append(this.albumNumber)
-                .append(",")
-                .append(this.pesel)
-                .append(",")
-                .append(this.status.name());
-        return dataToSave.toString();
-    }
-
-    @Override
-    public String getFileName() {
-        return STUDENT_FILE;
-    }
-
-    @Override
-    public String toString() {
-        return "STUDENTE! " + id;
     }
 }

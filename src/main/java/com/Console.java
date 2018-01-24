@@ -1,6 +1,8 @@
 package com;
 
 import com.command.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -77,7 +79,6 @@ public class Console {
         System.out.println("8 - wprowadź tytuł naukowy");
         System.out.println("9 - zmień status studenta");
         System.out.println("10 - wystaw ocenę");
-
         System.out.println();
         System.out.println("11 - wyjście");
     }

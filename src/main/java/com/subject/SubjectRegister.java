@@ -3,7 +3,8 @@ package com.subject;
 import com.DeanOfficeWriter;
 import com.IPostSpringInit;
 import com.InfoProvider;
-import com.IReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,6 +13,7 @@ import java.util.*;
 
 @Component
 public class SubjectRegister implements IPostSpringInit {
+    private static final Logger LOGGER = LoggerFactory.getLogger(SubjectRegister.class);
     private final Map<Integer, Subject> subjects = new HashMap<>();
     private static String SUBJECTS_FILE = "subjects.csv";
     @Autowired
@@ -19,6 +21,7 @@ public class SubjectRegister implements IPostSpringInit {
     @Autowired
     private SubjectReader subjectReader;
 
+    @Override
     public void init() {
         File file = new File(SUBJECTS_FILE);
         if (file.exists() && !file.isDirectory()) {
@@ -31,11 +34,11 @@ public class SubjectRegister implements IPostSpringInit {
             int id = getNextId();
             subject.setId(id);
             subjects.put(id, subject);
-            System.out.println("Dodano przedmiot do listy.");
+            LOGGER.info("Dodano przedmiot do listy.");
             DeanOfficeWriter officeWriter = new DeanOfficeWriter();
             officeWriter.save(subject);
         } else {
-            System.out.println("Przedmiot istnieje już w bazie.");
+            LOGGER.info("Przedmiot istnieje już w bazie.");
         }
     }
 

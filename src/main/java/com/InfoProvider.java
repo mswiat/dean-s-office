@@ -1,5 +1,7 @@
 package com;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
@@ -9,6 +11,7 @@ import java.io.IOException;
 
 @Component
 public class InfoProvider {
+    private static final Logger LOGGER = LoggerFactory.getLogger(InfoProvider.class);
     public void getInfo(String fileName, IReader reader) {
         File input = new File(fileName);
         try (BufferedReader br = new BufferedReader(new FileReader(input))) {
@@ -18,8 +21,7 @@ public class InfoProvider {
                 line = br.readLine();
             }
         } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Coś poszło nie tak z plikiem " + fileName);
+            LOGGER.error("Problem with reading data from: " + fileName, e);
         }
     }
 }

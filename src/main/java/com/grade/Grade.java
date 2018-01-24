@@ -3,15 +3,16 @@ package com.grade;
 import com.Savable;
 
 public class Grade implements Savable {
+    private static final String DELIMITER = ",";
     private static final String GRADES_FILE = "grades.csv";
     private int studentId;
     private int subjectId;
-    private GradeEnum grade;
+    private GradeEnum gradeEnum;
 
-    public Grade(int studentId, int subjectId, GradeEnum grade) {
+    public Grade(int studentId, int subjectId, GradeEnum gradeEnum) {
         this.studentId = studentId;
         this.subjectId = subjectId;
-        this.grade = grade;
+        this.gradeEnum = gradeEnum;
     }
 
     @Override
@@ -19,10 +20,10 @@ public class Grade implements Savable {
         StringBuilder dataToSave = new StringBuilder();
         dataToSave
                 .append(this.studentId)
-                .append(",")
+                .append(DELIMITER)
                 .append(this.subjectId)
-                .append(",")
-                .append(this.grade);
+                .append(DELIMITER)
+                .append(this.gradeEnum);
         return dataToSave.toString();
     }
 

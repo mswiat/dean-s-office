@@ -2,12 +2,8 @@ package com.subject;
 
 import com.Savable;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public class Subject implements Savable {
-
+    private static final String DELIMITER = ",";
     private static final String SUBJECT_FILE = "subjects.csv";
     private String name;
     private String duration;
@@ -22,10 +18,6 @@ public class Subject implements Savable {
         this.test = test;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public void info() {
         System.out.println("Subject ID: " + id);
         System.out.println("nazwa: " + this.name);
@@ -34,33 +26,19 @@ public class Subject implements Savable {
         System.out.println("zaliczenie: " + this.test);
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getId() {
-        return id;
-    }
-
     @Override
     public String getDataToSave() {
         StringBuilder dataToSave = new StringBuilder();
         dataToSave
                 .append(this.id)
-                .append(",")
+                .append(DELIMITER)
                 .append(this.name)
-                .append(",")
+                .append(DELIMITER)
                 .append(this.duration)
-                .append(",")
+                .append(DELIMITER)
                 .append(this.ects)
-                .append(",")
+                .append(DELIMITER)
                 .append(this.test);
-        List<String> data = new ArrayList<>();
-        data.add(this.name);
-        data.add(this.duration);
-        data.add(String.valueOf(this.ects));
-        data.add(this.test);
-
         return dataToSave.toString();
     }
 
@@ -69,4 +47,15 @@ public class Subject implements Savable {
         return SUBJECT_FILE;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

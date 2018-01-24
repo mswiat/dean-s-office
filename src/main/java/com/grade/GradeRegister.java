@@ -4,24 +4,26 @@ import com.DeanOfficeWriter;
 import com.IReader;
 import com.InfoProvider;
 import com.student.Student;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
 @Component
 public class GradeRegister {
-    private static String GRADES_FILE = "grades.csv";
+    private static final Logger LOGGER = LoggerFactory.getLogger(GradeRegister.class);
+    private static final String GRADES_FILE = "grades.csv";
     @Autowired
     private InfoProvider infoProvider;
 
-    public static void addGrade(Grade grade) {
+    public void addGrade(Grade grade) {
         DeanOfficeWriter officeWriter = new DeanOfficeWriter();
         officeWriter.save(grade);
-        System.out.println("Dodano ocenę");
+        LOGGER.info("Dodano ocenę");
     }
 
     public Map<Integer, List<BigDecimal>> getGrades(Student student) {

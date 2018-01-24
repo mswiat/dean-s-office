@@ -1,10 +1,14 @@
 package com;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.*;
-import java.util.List;
 import java.util.Map;
 
 public class DeanOfficeWriter {
+    private static final Logger LOGGER = LoggerFactory.getLogger(DeanOfficeWriter.class);
+
     /**
      * Metoda zapisująca dany obiekt do pliku
      *
@@ -18,8 +22,7 @@ public class DeanOfficeWriter {
             bw.write(dataToSave);
             bw.newLine();
         } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Coś poszło nie tak z plikiem " + s.getFileName());
+            LOGGER.error("Problem with saving to: " + s.getFileName(), e);
         }
     }
 
@@ -33,8 +36,7 @@ public class DeanOfficeWriter {
                 bw.newLine();
             }
         } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Coś poszło nie tak z plikiem " + fileName);
+            LOGGER.error("Problem with saving to: " + fileName, e);
         }
     }
 }

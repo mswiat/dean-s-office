@@ -1,8 +1,12 @@
 package com.command;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class NotFoundCommand implements ICommand{
+    private static final Logger LOGGER = LoggerFactory.getLogger(NotFoundCommand.class);
     @Override
     public void execute() {
-        System.out.println("Command not found");
+        LOGGER.info("Command not found");
     }
 }

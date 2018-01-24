@@ -4,9 +4,10 @@ import com.Person;
 import com.Savable;
 
 public class Teacher extends Person implements Savable {
+    private static final String DELIMITER = ",";
     private static final String TEACHER_FILE = "teachers.csv";
 
-    private String degree;
+    private String degree = "b/d";
     private int id;
 
     public Teacher(String firstName, String lastName, Long pesel) {
@@ -20,6 +21,27 @@ public class Teacher extends Person implements Savable {
         System.out.println("imię: " + firstName);
         System.out.println("nazwisko: " + lastName);
         System.out.println("PESEL: " + pesel);
+    }
+
+    @Override
+    public String getDataToSave() {
+        StringBuilder dataToSave = new StringBuilder();
+        dataToSave
+                .append(this.id)
+                .append(DELIMITER)
+                .append(this.firstName)
+                .append(DELIMITER)
+                .append(this.lastName)
+                .append(DELIMITER)
+                .append(degree)
+                .append(DELIMITER)
+                .append(this.pesel);
+        return dataToSave.toString();
+    }
+
+    @Override
+    public String getFileName() {
+        return TEACHER_FILE;
     }
 
     public String getDegree() {
@@ -36,27 +58,6 @@ public class Teacher extends Person implements Savable {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    @Override
-    public String getDataToSave() {
-        StringBuilder dataToSave = new StringBuilder();
-        dataToSave
-                .append(this.id)
-                .append(",")
-                .append(this.firstName)
-                .append(",")
-                .append(this.lastName)
-                .append(",")
-                .append((degree == null ? "b/d" : degree))
-                .append(",")
-                .append(this.pesel);
-        return dataToSave.toString();
-    }
-
-    @Override
-    public String getFileName() {
-        return TEACHER_FILE;
     }
 
 }

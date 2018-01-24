@@ -3,11 +3,11 @@ package com.student;
 import com.DeanOfficeWriter;
 import com.IPostSpringInit;
 import com.InfoProvider;
-import com.IReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.io.File;
 import java.util.*;
 
@@ -19,6 +19,7 @@ public class StudentRegister implements IPostSpringInit {
     //garbage collector nigdy nie usunie zmiennej statycznej
     //students -> Singleton !
 
+    private static final Logger logger = LoggerFactory.getLogger(StudentRegister.class);
     private final Map<Integer, Student> students = new HashMap<>();
     private static String STUDENTS_FILE = "students.csv";
     @Autowired
@@ -39,11 +40,11 @@ public class StudentRegister implements IPostSpringInit {
             int id = getNextId();
             student.setId(id);
             students.put(id, student);
-            System.out.println("Dodano studenta do listy.");
+            logger.info("Dodano studenta do listy.");
             DeanOfficeWriter officeWriter = new DeanOfficeWriter();
             officeWriter.save(student);
         } else {
-            System.out.println("Student istnieje już w bazie.");
+            logger.info("Student istnieje już w bazie.");
         }
     }
 

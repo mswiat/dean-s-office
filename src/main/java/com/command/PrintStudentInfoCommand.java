@@ -9,6 +9,7 @@ import java.util.Map;
 
 @Component
 public class PrintStudentInfoCommand implements ICommand {
+
     @Autowired
     private StudentRegister studentRegister;
 
