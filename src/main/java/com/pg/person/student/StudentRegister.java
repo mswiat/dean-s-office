@@ -16,11 +16,6 @@ import java.util.Set;
 @Component
 public class StudentRegister implements IPostSpringInit {
 
-    //student register powinien byc beanem w springu
-    //nie powinno się ustawiać list i map jako static -> wycieki pamięci
-    //garbage collector nigdy nie usunie zmiennej statycznej
-    //students -> Singleton !
-
     private static final Logger logger = LoggerFactory.getLogger(StudentRegister.class);
     private final Map<Integer, Student> students = new HashMap<>();
     private static String STUDENTS_FILE = "students.csv";
